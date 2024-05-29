@@ -77,7 +77,4 @@ clean:: # @HELP remove all the build artifacts
 
 mcl_publish:
 	echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-	make images
-	docker images
-	docker push khusdran/onos-kpimon:test
 

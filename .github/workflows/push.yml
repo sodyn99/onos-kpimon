@@ -26,27 +26,31 @@ jobs:
 
       - run: echo GIT_SHA_SHORT=$(git rev-parse --short HEAD) >> $GITHUB_ENV
 
-      # - uses: docker/login-action@v3.1.0
-      #   with:
-      #     registry: ${{ env.REGISTRY }}
-      #     username: ${{ secrets.DOCKER_USERNAME }}
-      #     password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: docker/login-action@v3.1.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push "master-latest" Docker image
+      - name: Build and push Docker image
         env:
           DOCKER_TAG: test
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           git clone https://github.com/onosproject/build-tools.git build/build-tools
-          make mcl_publish
+          make images
+          docker images
+          docker push khusdran/onos-kpimon:test
 
-      - name: Build and push "master-GIT_SHA" Docker image
-        env:
-          DOCKER_TAG: test #master-${{ env.GIT_SHA_SHORT }}
-        run: |
-          git clone https://github.com/onosproject/build-tools.git build/build-tools
-          make mcl_publish
+      # - name: Build and push "master-GIT_SHA" Docker image
+      #   env:
+      #     DOCKER_TAG: master-${{ env.GIT_SHA_SHORT }}
+      #   run: |
+      #     git clone https://github.com/onosproject/build-tools.git build/build-tools
+      #     make images
+      #     docker images
+      #     docker push khusdran/onos-kpimon:master-${{ env.GIT_SHA_SHORT }}
 
   # CAUTION: Other actions depend on this name "tag-github"
   tag-github:

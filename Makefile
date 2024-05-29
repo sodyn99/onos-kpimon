@@ -76,6 +76,7 @@ clean:: # @HELP remove all the build artifacts
 	go clean -testcache github.com/onosproject/onos-kpimon/...
 
 mcl_publish:
+	echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
 	make images
 	docker images
 	docker push ${DOCKER_REGISTRY}${DOCKER_REPOSITORY}onos-kpimon:test

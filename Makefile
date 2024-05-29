@@ -77,5 +77,6 @@ clean:: # @HELP remove all the build artifacts
 
 mcl_publish:
 	make images
-	docker push khusdran/onos-kpimon:test
+	docker images
+	docker push ${DOCKER_REGISTRY}${DOCKER_REPOSITORY}onos-kpimon:test
 

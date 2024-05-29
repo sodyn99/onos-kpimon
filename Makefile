@@ -7,7 +7,7 @@ export GO111MODULE=on
 
 .PHONY: build
 
-ONOS_KPIMON_VERSION := latest
+ONOS_KPIMON_VERSION := test
 ONOS_PROTOC_VERSION := v0.6.6
 BUF_VERSION := 0.27.1
 
@@ -51,7 +51,7 @@ onos-kpimon-docker: # @HELP build onos-kpimon Docker image
 onos-kpimon-docker:
 	@go mod vendor
 	docker build . -f build/onos-kpimon/Dockerfile \
-		-t onosproject/onos-kpimon:${ONOS_KPIMON_VERSION}
+		-t khusdran/onos-kpimon:${ONOS_KPIMON_VERSION}
 	@rm -rf vendor
 
 images: # @HELP build all Docker images
@@ -76,9 +76,7 @@ clean:: # @HELP remove all the build artifacts
 	go clean -testcache github.com/onosproject/onos-kpimon/...
 
 mcl_publish:
-	docker pull khusdran/onos-kpimon:latest
-	docker tag khusdran/onos-kpimon:latest khusdran/onos-kpimon:test_v1
 	make images
-	docker push khusdran/onos-kpimon:test_v1
+	docker push khusdran/onos-kpimon:test
 	./build/bin/push-images
 

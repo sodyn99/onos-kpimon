@@ -76,6 +76,9 @@ clean:: # @HELP remove all the build artifacts
 	go clean -testcache github.com/onosproject/onos-kpimon/...
 
 mcl_publish:
-	docker pull khusdran/onos-kpimon
+	docker pull khusdran/onos-kpimon:latest
+	docker tag khusdran/onos-kpimon:latest khusdran/onos-kpimon:test_v1
+	build onos-kpimon-docker
+	docker push khusdran/onos-kpimon:test_v1
 	./build/bin/push-images
 

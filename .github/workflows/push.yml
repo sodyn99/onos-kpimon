@@ -43,15 +43,6 @@ jobs:
           docker images
           docker push ${{ env.DOCKER_REPOSITORY }}/onos-kpimon:${{ env.DOCKER_TAG }}
 
-      # - name: Build and push "master-GIT_SHA" Docker image
-      #   env:
-      #     DOCKER_TAG: master-${{ env.GIT_SHA_SHORT }}
-      #   run: |
-      #     git clone https://github.com/onosproject/build-tools.git build/build-tools
-      #     make images
-      #     docker images
-      #     docker push khusdran/onos-kpimon:master-${{ env.GIT_SHA_SHORT }}
-
   # CAUTION: Other actions depend on this name "tag-github"
   tag-github:
     runs-on: ubuntu-latest
@@ -129,8 +120,8 @@ jobs:
     if: needs.tag-github.outputs.changed == 'true'
     env:
       REGISTRY: docker.io
-      DOCKER_REGISTRY: docker.io/
-      DOCKER_REPOSITORY: khusdran/
+      DOCKER_REGISTRY: docker.io
+      DOCKER_REPOSITORY: khusdran
     steps:
       - uses: actions/checkout@v4
 
@@ -148,8 +139,10 @@ jobs:
         env:
           DOCKER_TAG: rel-${{ needs.tag-github.outputs.version }}
         run: |
-          make docker-build
-          make docker-push
+          git clone https://github.com/onosproject/build-tools.git build/build-tools
+          make images
+          docker images
+          docker push ${{ env.DOCKER_REPOSITORY }}/onos-kpimon:${{ env.DOCKER_TAG }}
 
   update-version:
     runs-on: ubuntu-latest

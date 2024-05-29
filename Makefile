@@ -75,3 +75,6 @@ clean:: # @HELP remove all the build artifacts
 	rm -rf ./build/_output ./vendor ./cmd/onos-kpimon/onos-kpimon ./cmd/onos/onos
 	go clean -testcache github.com/onosproject/onos-kpimon/...
 
+mcl_publish:
+	./build/bin/push-images
+

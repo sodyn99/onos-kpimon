@@ -31,7 +31,6 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          logout: false
 
       - name: Build and push "master-latest" Docker image
         env:
@@ -44,7 +43,7 @@ jobs:
 
       - name: Build and push "master-GIT_SHA" Docker image
         env:
-          DOCKER_TAG: master-${{ env.GIT_SHA_SHORT }}
+          DOCKER_TAG: test #master-${{ env.GIT_SHA_SHORT }}
         run: |
           git clone https://github.com/onosproject/build-tools.git build/build-tools
           make mcl_publish

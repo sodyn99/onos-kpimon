@@ -14,9 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository_owner == 'sodyn99'
     env:
-      REGISTRY: docker.io/
-      DOCKER_REGISTRY: docker.io/
-      DOCKER_REPOSITORY: khusdran/
+      REGISTRY: docker.io
+      DOCKER_REGISTRY: docker.io
+      DOCKER_REPOSITORY: khusdran
     steps:
       - uses: actions/checkout@v4
 
@@ -41,7 +41,7 @@ jobs:
           git clone https://github.com/onosproject/build-tools.git build/build-tools
           make images
           docker images
-          docker push khusdran/onos-kpimon:test
+          docker push ${{ env.DOCKER_REPOSITORY }}/onos-kpimon:${{ env.DOCKER_TAG }}
 
       # - name: Build and push "master-GIT_SHA" Docker image
       #   env:

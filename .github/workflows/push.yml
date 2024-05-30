@@ -80,13 +80,16 @@ jobs:
         #                           - test 31 참고
         #                       - 바뀐 'version'이 0.1.0
         #                           - 'version_before'가 validate 충족
+        #                           - 1.2.3 에서 major: 1, minor: 2, patch: 3
         #                           - if [[ "$major" -ne "$major_b" ]] || [[ "$minor" -ne "$minor_b" ]] 만족 안함
-        #                           - 'release_branch=false'
+        #                             major 혹은 minor 변경 시 (patch 변경은 해당 안됨)
+        #                           - 'release_branch=false' -> 'branch-release' 실행 안함
         #                           - test 32 참고
         #                       - 바뀐 'version'이 0.2.0
         #                           - validate 충족 -> 'version-change.changed=true' -> `release-image`, `update-version` 실행
         #                           - 'version_before'가 validate 충족
         #                           - 'release_branch=true' -> 'branch-release' 실행
+        #                           - test 34 참고
         run: |
           version=$(cat VERSION)
           version_before_full=${{ steps.version-file.outputs.version_before }}

@@ -1,3 +1,0 @@
-# Action test
-
-- Push
